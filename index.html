@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jarvis AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #command-input {
+            width: 50%;
+            height: 30px;
+            font-size: 18px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border -radius: 5px;
+        }
+        #command-button {
+            width: 100px;
+            height: 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #command-button:hover {
+            background-color: #3e8e41;
+        }
+        #response {
+            font-size: 18px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jarvis AI</h1>
+    <input id="command-input" type="text" placeholder="Enter your command">
+    <button id="command-button">Send</button>
+    <div id="response"></div>
+
+    <script>
+        const commandInput = document.getElementById('command-input');
+        const commandButton = document.getElementById('command-button');
+        const responseDiv = document.getElementById('response');
+
+        commandButton.addEventListener('click', () => {
+            const command = commandInput.value;
+            fetch('/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command })
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerText = data.response;
+            })
+            .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
